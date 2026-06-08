@@ -67,6 +67,7 @@ def _env_bool(*keys: str) -> bool:
 
 
 DEPRECATED_MODE = _env_bool("DEPRECATED_MODE", "DEPERECEATED_MODE")
+BACKEND_ONLY = _env_bool("BACKEND_ONLY")
 
 
 
@@ -101,6 +102,26 @@ def enforce_deprecated_mode():
         return None
 
     return render_template("deprecated.html"), 503
+
+
+@app.before_request
+def enforce_backend_only_mode():
+
+    if not BACKEND_ONLY:
+
+        return None
+
+    # Keep API-like/export endpoints available for the frontend app.
+    if request.endpoint in ("health", "export", "download", "preview_pdf", "static"):
+
+        return None
+
+    # Block UI pages on backend deployment.
+    if request.endpoint in ("index", "result", "wake"):
+
+        abort(404)
+
+    return None
 
 
 
