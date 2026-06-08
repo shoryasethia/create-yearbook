@@ -83,7 +83,31 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 def inject_config():
 
-    return {"github_repo": GITHUB_REPO}
+    if BACKEND_URL:
+
+        return {
+
+            "github_repo": GITHUB_REPO,
+
+            "backend_url": BACKEND_URL,
+
+            "export_url": f"{BACKEND_URL}/export",
+
+            "health_url": f"{BACKEND_URL}/health",
+
+        }
+
+    return {
+
+        "github_repo": GITHUB_REPO,
+
+        "backend_url": "",
+
+        "export_url": "/export",
+
+        "health_url": "/health",
+
+    }
 
 
 
