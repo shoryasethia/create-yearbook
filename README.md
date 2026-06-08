@@ -1,86 +1,118 @@
 # Create Yearbook
 
-<p align="center">
-  <img src="static/logo.png" alt="Create Yearbook logo" width="120" />
-</p>
+Lightweight, unofficial tool to export **posts** and **gallery images** from the [IITB Yearbook portal](https://yearbook.sarc-iitb.org) as a PDF or Markdown file.
 
-Lightweight, unofficial tool to download **posts** and **gallery images** from the [IITB Yearbook portal](https://yearbook.sarc-iitb.org).
+> **Not affiliated with SARC, IIT Bombay, or the Yearbook team.**
 
-Not affiliated with SARC, IIT Bombay, or the Yearbook team.
+---
+
+## ⚠️ Run locally only
+
+The yearbook portal is protected by Cloudflare and blocks requests from cloud servers (Render, Vercel, Railway, etc.). This tool works **only when run on your own machine** using your regular internet connection.
+
+---
 
 ## What you get
 
+| Export | Contents |
+|--------|----------|
+| **PDF** | In-browser preview, all posts, optional gallery images embedded |
+| **Markdown** | Post text + JSON metadata; optional gallery images bundled as a zip |
 
-| Export       | Contents                                                                |
-| ------------ | ----------------------------------------------------------------------- |
-| **PDF**      | In-browser preview, optional gallery images embedded                    |
-| **Markdown** | Post text + JSON; optional gallery images linked from the markdown file |
+---
 
+## Setup
 
-## Web app
-
-```powershell
+```bash
 pip install -r requirements.txt
 npm install
 npm run build:css
+```
+
+---
+
+## Web app
+
+```bash
 python app.py
 ```
 
-CSS uses [Tailwind](https://tailwindcss.com). After editing templates, rebuild with `npm run build:css` (or `npm run watch:css` while developing).
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
-Open [http://127.0.0.1:5000](http://127.0.0.1:5000)
+Enter your roll number (or `roll@iitb.ac.in`) and your **yearbook portal password** — not your IITB LDAP/SSO password, but the one you set on the portal itself.
 
-Production (no debug, custom port):
-
-```powershell
-$env:FLASK_DEBUG = "0"
-$env:PORT = "8080"
-python app.py
-```
+---
 
 ## CLI
 
-```powershell
-$env:YB_USERNAME = "yourroll@iitb.ac.in"
-$env:YB_PASSWORD = "your-password"
+```bash
+python scrape_yearbook.py --username 22b1234@iitb.ac.in --password yourpassword
+```
+
+Or use environment variables:
+
+```bash
+export YB_USERNAME=22b1234@iitb.ac.in
+export YB_PASSWORD=yourpassword
 python scrape_yearbook.py --profile-id 1234 --format both
 ```
 
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--username` | `YB_USERNAME` env | Roll or email |
+| `--password` | `YB_PASSWORD` env | Yearbook portal password |
+| `--profile-id` | your own | Profile number from `/profile/ID` in the URL |
+| `--format` | `both` | `md`, `pdf`, or `both` |
+| `--no-gallery` | off | Skip downloading gallery images |
 
-| Flag           | Description                       |
-| -------------- | --------------------------------- |
-| `--username`   | Roll or email (or `YB_USERNAME`)  |
-| `--password`   | Password (or `YB_PASSWORD`)       |
-| `--profile-id` | Target profile; omit for your own |
-| `--format`     | `md`, `pdf`, or `both` (default)  |
-| `--no-gallery` | Skip image download               |
-
+---
 
 ## Project layout
 
 ```
-├── scrape_yearbook.py   # Core scraper + export
-├── app.py               # Flask web UI
-├── static/css/input.css
-├── static/css/tailwind.css
-├── tailwind.config.js
-├── package.json
-├── static/js/theme.js
-├── static/js/loader.js
-├── templates/index.html
-├── templates/result.html
+├── app.py                  # Flask web UI
+├── scrape_yearbook.py      # Core scraper + PDF/Markdown exporter
 ├── requirements.txt
-└── README.md
+├── package.json            # Tailwind CSS build
+├── tailwind.config.js
+├── static/
+│   ├── css/
+│   │   ├── input.css
+│   │   └── tailwind.css    # compiled, committed
+│   └── js/
+│       ├── loader.js
+│       ├── share.js
+│       ├── theme.js
+│       └── wakeup.js
+└── templates/
+    ├── index.html
+    ├── result.html
+    ├── _topbar.html
+    ├── _footer.html
+    └── _wake_overlay.html
 ```
+
+---
 
 ## Privacy
 
-- Credentials are sent only to the official Yearbook API for a single request.
-- Nothing is stored on disk beyond temporary export files in the system temp folder.
+- Credentials are sent directly to the official Yearbook API and are not stored anywhere.
+- Export files are written to your system's temp folder and deleted when the OS cleans it up.
+- No analytics, no logging, no third-party services.
+
+---
 
 ## Troubleshooting
 
-- **Invalid credentials** — use `roll@iitb.ac.in`, verify password on the [portal](https://yearbook.sarc-iitb.org).
-- **Profile ID** — number in `/profile/ID` when viewing someone's wall.
-- **Gallery empty** — posts still export; some profiles have no gallery images.
+| Problem | Fix |
+|---------|-----|
+| Invalid credentials | Use the password set on the yearbook portal, not your IITB LDAP password |
+| Profile ID | Copy the number from `/profile/1234` in the URL when viewing someone's wall |
+| Gallery empty | Some profiles have no gallery images — posts still export |
+| CSS looks broken | Run `npm install && npm run build:css` |
 
+---
+
+## License
+
+[Apache 2.0](LICENSE) — made by [Shorya Sethia](https://github.com/shoryasethia)

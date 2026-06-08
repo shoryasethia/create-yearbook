@@ -32,7 +32,7 @@
           {% endif %}
         {% endwith %}
 
-        <form action="{{ export_url }}" method="post" id="export-form" class="space-y-5">
+        <form action="/export" method="post" id="export-form" class="space-y-5">
           <div class="space-y-3">
             <input class="field-input" type="text" id="username" name="username" placeholder="Roll or email" required autocomplete="username" aria-label="Roll number or email">
             <input class="field-input" type="password" id="password" name="password" placeholder="Yearbook password" required autocomplete="current-password" aria-label="Yearbook password">
@@ -122,7 +122,6 @@
 
   </div>
 
-  <script>window.BACKEND_HEALTH_URL = {{ health_url | tojson }};</script>
   <script src="{{ url_for('static', filename='js/wakeup.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
 </body>
