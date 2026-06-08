@@ -74,7 +74,7 @@ def _create_export(data, export_format: str) -> str:
         (job_dir / "yearbook.md").write_text(markdown, encoding="utf-8")
         (job_dir / "yearbook.json").write_text(export_json(data), encoding="utf-8")
         meta["has_md"] = True
-        if data.gallery_images:
+        if data.gallery_images or data.profile_photo:
             (job_dir / "export.bundle").write_bytes(build_markdown_bundle(data, markdown))
             meta["md_with_images"] = True
 

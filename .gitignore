@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 .env
 *.bundle
+.emoji_*/
+_emoji_cache_test/
+_emoji_test.pdf
