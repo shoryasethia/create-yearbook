@@ -46,8 +46,6 @@ app.secret_key = os.environ.get("SECRET_KEY") or uuid.uuid4().hex
 
 GITHUB_REPO = os.environ.get("GITHUB_REPO", "https://github.com/shoryasethia/create-yearbook")
 
-BACKEND_URL = os.environ.get("BACKEND_URL", "").rstrip("/")
-
 
 
 
@@ -67,7 +65,6 @@ def _env_bool(*keys: str) -> bool:
 
 
 DEPRECATED_MODE = _env_bool("DEPRECATED_MODE", "DEPERECEATED_MODE")
-BACKEND_ONLY = _env_bool("BACKEND_ONLY")
 
 
 
@@ -83,25 +80,9 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 def inject_config():
 
-    if BACKEND_URL:
-
-        return {
-
-            "github_repo": GITHUB_REPO,
-
-            "backend_url": BACKEND_URL,
-
-            "export_url": f"{BACKEND_URL}/export",
-
-            "health_url": f"{BACKEND_URL}/health",
-
-        }
-
     return {
 
         "github_repo": GITHUB_REPO,
-
-        "backend_url": "",
 
         "export_url": "/export",
 
@@ -128,24 +109,6 @@ def enforce_deprecated_mode():
     return render_template("deprecated.html"), 503
 
 
-@app.before_request
-def enforce_backend_only_mode():
-
-    if not BACKEND_ONLY:
-
-        return None
-
-    # Keep API-like/export endpoints available for the frontend app.
-    if request.endpoint in ("health", "export", "download", "preview_pdf", "static"):
-
-        return None
-
-    # Block UI pages on backend deployment.
-    if request.endpoint in ("index", "result", "wake"):
-
-        abort(404)
-
-    return None
 
 
 
