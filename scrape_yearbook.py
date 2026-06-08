@@ -69,7 +69,9 @@ class YearbookClient:
             timeout=60,
         )
         if response.status_code != 200:
-            raise ValueError("Invalid credentials. Check username and password.")
+            raise ValueError(
+                f"Login failed (HTTP {response.status_code}): {response.text[:200]}"
+            )
         token = response.json()["access"]
         self._headers = {"Authorization": f"Bearer {token}"}
 
