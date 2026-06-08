@@ -14,7 +14,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from flask import Flask, abort, flash, redirect, render_template, request, send_file, url_for
+from flask import Flask, abort, flash, make_response, redirect, render_template, request, send_file, url_for
 
 
 
@@ -45,6 +45,8 @@ app.secret_key = os.environ.get("SECRET_KEY") or uuid.uuid4().hex
 
 
 GITHUB_REPO = os.environ.get("GITHUB_REPO", "https://github.com/shoryasethia/create-yearbook")
+
+BACKEND_URL = os.environ.get("BACKEND_URL", "").rstrip("/")
 
 
 
@@ -204,15 +206,29 @@ def _create_export(data, export_format: str) -> str:
 
 
 
-@app.route("/health")
+@app.route("/health", methods=["GET", "OPTIONS"])
 
 def health():
 
-    if DEPRECATED_MODE:
+    if request.method == "OPTIONS":
 
-        return {"status": "deprecated"}, 503
+        resp = make_response("", 204)
 
-    return {"status": "ok"}
+    elif DEPRECATED_MODE:
+
+        resp = make_response({"status": "deprecated"}, 503)
+
+    else:
+
+        resp = make_response({"status": "ok"}, 200)
+
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+
+    resp.headers["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+
+    resp.headers["Access-Control-Allow-Headers"] = "Accept"
+
+    return resp
 
 
 
@@ -406,6 +422,4 @@ if __name__ == "__main__":
 
     port = int(os.environ.get("PORT", "5000"))
 
-    app.run(host="0.0.0.0", port=port, debug=True)
-
-
+    app.run(host="0.0.0.0", port=port, debug=debug) 

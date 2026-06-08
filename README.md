@@ -1,4 +1,8 @@
-# Scrape Yearbook
+# Create Yearbook
+
+<p align="center">
+  <img src="static/logo.png" alt="Create Yearbook logo" width="120" />
+</p>
 
 Lightweight, unofficial tool to download **posts** and **gallery images** from the [IITB Yearbook portal](https://yearbook.sarc-iitb.org).
 
@@ -6,10 +10,12 @@ Not affiliated with SARC, IIT Bombay, or the Yearbook team.
 
 ## What you get
 
-| Export | Contents |
-|--------|----------|
-| **PDF** | In-browser preview, optional gallery images embedded |
+
+| Export       | Contents                                                                |
+| ------------ | ----------------------------------------------------------------------- |
+| **PDF**      | In-browser preview, optional gallery images embedded                    |
 | **Markdown** | Post text + JSON; optional gallery images linked from the markdown file |
+
 
 ## Web app
 
@@ -40,13 +46,15 @@ $env:YB_PASSWORD = "your-password"
 python scrape_yearbook.py --profile-id 1234 --format both
 ```
 
-| Flag | Description |
-|------|-------------|
-| `--username` | Roll or email (or `YB_USERNAME`) |
-| `--password` | Password (or `YB_PASSWORD`) |
+
+| Flag           | Description                       |
+| -------------- | --------------------------------- |
+| `--username`   | Roll or email (or `YB_USERNAME`)  |
+| `--password`   | Password (or `YB_PASSWORD`)       |
 | `--profile-id` | Target profile; omit for your own |
-| `--format` | `md`, `pdf`, or `both` (default) |
-| `--no-gallery` | Skip image download |
+| `--format`     | `md`, `pdf`, or `both` (default)  |
+| `--no-gallery` | Skip image download               |
+
 
 ## Project layout
 
@@ -75,3 +83,4 @@ python scrape_yearbook.py --profile-id 1234 --format both
 - **Invalid credentials** — use `roll@iitb.ac.in`, verify password on the [portal](https://yearbook.sarc-iitb.org).
 - **Profile ID** — number in `/profile/ID` when viewing someone's wall.
 - **Gallery empty** — posts still export; some profiles have no gallery images.
+

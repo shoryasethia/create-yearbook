@@ -9,8 +9,9 @@
   }
 
   async function pingHealth() {
+    const healthUrl = window.BACKEND_HEALTH_URL || "/health";
     try {
-      const response = await fetch("/health", {
+      const response = await fetch(healthUrl, {
         cache: "no-store",
         headers: { Accept: "application/json" },
       });

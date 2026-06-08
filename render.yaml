@@ -13,5 +13,3 @@ services:
         value: "0"
       - key: GITHUB_REPO
         value: https://github.com/shoryasethia/create-yearbook
-      - key: SECRET_KEY
-        generateValue: true
