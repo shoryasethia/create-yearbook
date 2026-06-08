@@ -1,0 +1,38 @@
+<nav class="sticky top-0 z-50 flex w-full items-center justify-between border-b border-line/80 bg-panel/80 px-5 py-3 backdrop-blur-md dark:border-line-dark dark:bg-canvas-dark/80">
+  <a href="{{ url_for('index') }}" class="flex items-center gap-2.5 text-sm font-medium text-zinc-800 dark:text-zinc-100">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="" width="56" height="56" class="app-logo" aria-hidden="true">
+    Scrape Yearbook
+  </a>
+  <div class="flex items-center gap-3">
+    <button type="button" id="share-btn" data-url="{{ url_for('index', _external=True) }}"
+      aria-label="Copy site link to share"
+      class="flex items-center gap-2.5 rounded-md px-3 py-2 text-xs font-medium text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">
+      <svg class="h-[18px] w-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+      </svg>
+      <span data-share-label>Share</span>
+    </button>
+    <button type="button" id="theme-toggle" aria-label="Toggle dark mode"
+      class="rounded-md p-2 text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200">
+    <svg class="hidden h-[18px] w-[18px] dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <svg class="h-[18px] w-[18px] dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+    </button>
+  </div>
+  <script src="{{ url_for('static', filename='js/share.js') }}" defer></script>
+</nav>
+<p id="share-toast" role="status" aria-live="polite"
+   class="pointer-events-none fixed left-1/2 top-14 z-[60] -translate-x-1/2 rounded-lg border border-line bg-panel px-3 py-1.5 text-xs font-medium text-zinc-700 opacity-0 shadow-md transition-opacity duration-200 dark:border-line-dark dark:bg-panel-dark dark:text-zinc-200">
+  Copied to clipboard
+</p>

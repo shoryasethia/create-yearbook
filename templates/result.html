@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ meta.name }} — Export ready</title>
+  <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</head>
+<body class="flex min-h-full flex-col bg-canvas text-zinc-900 dark:bg-canvas-dark dark:text-zinc-100">
+  {% include '_wake_overlay.html' %}
+  <div id="app-shell" class="flex min-h-full flex-1 flex-col">
+  {% include '_topbar.html' %}
+
+  <main class="flex flex-1 flex-col items-center px-4 pb-12 pt-8 sm:px-6">
+    <div class="w-full max-w-5xl">
+      <header class="mb-6 text-center">
+        <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Ready</p>
+        <h1 class="mt-1 text-2xl font-semibold tracking-tight">{{ meta.name }}</h1>
+        <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+          {{ meta.posts_for }} for · {{ meta.posts_by }} by{% if meta.images %} · {{ meta.images }} images{% endif %}
+        </p>
+      </header>
+
+      <div class="grid gap-4 {% if meta.has_pdf %}lg:grid-cols-[1fr_240px]{% else %}max-w-sm mx-auto{% endif %}">
+        {% if meta.has_pdf %}
+        <div class="flex min-h-[55vh] flex-col overflow-hidden rounded-2xl border border-line bg-panel dark:border-line-dark dark:bg-panel-dark lg:min-h-[65vh]">
+          <div class="flex items-center justify-between border-b border-line px-4 py-2.5 dark:border-line-dark">
+            <span class="text-xs text-zinc-500 dark:text-zinc-400">Preview</span>
+            <a href="{{ url_for('preview_pdf', job_id=meta.job_id) }}" target="_blank" rel="noopener"
+               class="text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200">Fullscreen</a>
+          </div>
+          <iframe src="{{ url_for('preview_pdf', job_id=meta.job_id) }}" title="PDF preview"
+                  class="min-h-[50vh] w-full flex-1 border-0 bg-zinc-100 dark:bg-zinc-900/50 lg:min-h-0"></iframe>
+        </div>
+        {% endif %}
+
+        <div class="flex flex-col items-center gap-2">
+          {% if meta.has_pdf %}
+          <a href="{{ url_for('download', job_id=meta.job_id, kind='pdf') }}" class="download-card download-card-primary download-card-pdf">
+            <span class="text-sm font-medium">Download PDF</span>
+          </a>
+          {% endif %}
+          {% if meta.has_md %}
+          <a href="{{ url_for('download', job_id=meta.job_id, kind='md') }}" class="download-card w-full{% if not meta.has_pdf %} download-card-primary{% endif %} text-center">
+            <span class="text-sm font-medium">Download Markdown</span>
+          </a>
+          {% endif %}
+          <p class="pt-2 text-center">
+            <a href="{{ url_for('index') }}" class="text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300">← New export</a>
+          </p>
+        </div>
+      </div>
+
+      {% include '_footer.html' %}
+    </div>
+  </main>
+  </div>
+  <script src="{{ url_for('static', filename='js/wakeup.js') }}" defer></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .app-logo {
+    @apply h-14 w-14 shrink-0 object-contain brightness-0 dark:invert;
+  }
+
+  .field-input {
+    @apply w-full rounded-lg border border-line bg-panel px-3 py-2.5 text-[15px] text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none dark:border-line-dark dark:bg-zinc-800/80 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-500;
+  }
+
+  .field-with-help {
+    @apply relative;
+  }
+
+  .field-input-help {
+    @apply pr-10 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none;
+  }
+
+  .field-help-btn {
+    @apply absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-zinc-400 transition hover:text-zinc-600 focus:outline-none focus-visible:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300 dark:focus-visible:text-zinc-300;
+  }
+
+  .field-help-tip {
+    @apply pointer-events-none absolute left-0 right-0 top-full z-10 mt-1.5 rounded-lg border border-line bg-panel px-3 py-2 text-xs leading-relaxed text-zinc-600 opacity-0 shadow-sm transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 dark:border-line-dark dark:bg-zinc-800 dark:text-zinc-400;
+  }
+
+  .segment {
+    @apply flex flex-1 cursor-pointer items-center justify-center rounded-lg py-2.5 text-sm font-medium text-zinc-500 transition-colors has-[:checked]:bg-white has-[:checked]:text-zinc-900 has-[:checked]:shadow-sm dark:text-zinc-400 dark:has-[:checked]:bg-zinc-700 dark:has-[:checked]:text-zinc-100;
+  }
+
+  .faq-row summary {
+    @apply cursor-pointer list-none py-3.5 text-sm text-zinc-700 dark:text-zinc-200;
+  }
+
+  .faq-row summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-row p {
+    @apply pb-3.5 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400;
+  }
+
+  .download-card {
+    @apply block rounded-lg border border-line bg-panel p-3.5 transition hover:bg-zinc-50 dark:border-line-dark dark:bg-zinc-800/50 dark:hover:bg-zinc-800;
+  }
+
+  .download-card-primary {
+    @apply border-zinc-900 bg-zinc-900 text-white hover:bg-zinc-800 dark:border-zinc-200 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white;
+  }
+
+  .download-card-pdf {
+    @apply mx-auto w-fit min-w-[7.5rem] px-5 py-2 text-center;
+  }
+
+  .loader-bar {
+    transition: width 0.35s ease;
+  }
+
+  #share-toast.visible {
+    @apply opacity-100;
+  }
+
+  .standalone-page {
+    @apply flex min-h-screen items-center justify-center bg-canvas px-4 py-10 text-zinc-900 dark:bg-canvas-dark dark:text-zinc-100;
+  }
+
+  .standalone-card {
+    @apply w-full max-w-md rounded-2xl border border-line bg-panel px-8 py-10 shadow-sm dark:border-line-dark dark:bg-panel-dark;
+  }
+
+  .standalone-card-inner {
+    @apply flex flex-col items-center text-center;
+  }
+
+  .standalone-btn {
+    @apply mt-10 inline-flex items-center justify-center rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white;
+  }
+}
