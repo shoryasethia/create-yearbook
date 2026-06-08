@@ -8,7 +8,6 @@
   Unofficial tool to export your <a href="https://yearbook.sarc-iitb.org">IITB Yearbook</a> posts and gallery as PDF or Markdown.<br>
   Runs entirely on your machine — no cloud, no data stored.
 </p>
----
 
 ## What you get
 
